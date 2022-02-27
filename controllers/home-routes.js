@@ -4,7 +4,11 @@ const router = require('express').Router();
 //Routes
 
 router.get('/', async (req, res) => {
-    res.render('blog homepage')
+    try{
+        res.render('homepage')
+    } catch{
+        console.log(err)
+    }
 })
 
 module.exports = router
