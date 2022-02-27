@@ -15,12 +15,16 @@ Article.init(
             type: DataTypes.STRING,
             allowNull:false
         },
-        body:{
+        author:{
             type: DataTypes.STRING,
+            allowNull:false
+        },
+        body:{
+            type: DataTypes.TEXT,
             allowNull: false
         },
         date_created:{
-            type: DataTypes.DATEONLY,
+            type: DataTypes.DATE,
             allowNull:false
         },
         user_id:{
