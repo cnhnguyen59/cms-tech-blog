@@ -26,4 +26,27 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/article/:id', async (req,res) => {
+    try {
+        const articleData = await Article.findByPk(req.params.id, {
+            include: [{
+                model: User,
+                attributes: [
+                    'id',
+                    'firstName',
+                    'lastName',
+                    'username'
+                ]
+            }]
+        })
+        article = articleData.get({plain:true})
+        console.log(article)
+
+        res.render('article', {article})
+    } catch(err){
+        console.log(err)
+    }
+
+})
+
 module.exports = router

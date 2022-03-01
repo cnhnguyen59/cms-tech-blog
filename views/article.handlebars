@@ -1,0 +1,10 @@
+<div class="container d-flex flex-wrap m-3" style=" min-width:100vh; border: 2px white solid;">
+    <div class="head d-flex flex-column">
+        <h2 class="my-1">{{article.title}}</h2>
+        <p class ='my-0 py-1'>By {{article.user.firstName}} {{article.user.lastName}}</p>
+        <p class="mb-3" style="font-size: .75rem;">{{article.date_created}}</p>
+    </div>
+    <div class="body">
+        {{article.body}}
+    </div>
+</div>
