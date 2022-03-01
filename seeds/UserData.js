@@ -9,6 +9,13 @@ const userData = [
         lastName: 'Nguyen',
         email:'cnhnguyen@gmail.com',
         password: 'mypassword'
+    },
+    {
+        username: 'stanmanga96',
+        firstName: 'Stanley',
+        lastName: 'Lewis',
+        email:'stanmanga96@gt.edu',
+        password: 'mypassword'
     }
 ]
 

@@ -1,4 +1,5 @@
-const { Article, User } = require('../models');
+const { cp } = require('fs');
+const { Article, User, Comments } = require('../models');
 
 const router = require('express').Router();
 //import models
@@ -14,11 +15,10 @@ router.get('/', async (req, res) => {
                     attributes:['username']
                 }
             ],
-            /* raw: true */
         })
         const articles = articlesData.map((article) =>
             article.get({ plain: true })
-        );
+        ).reverse();
         console.log(articles)
         res.render('homepage', {articles})
     } catch(err){
@@ -37,10 +37,16 @@ router.get('/article/:id', async (req,res) => {
                     'lastName',
                     'username'
                 ]
-            }]
+            }/* ,
+        {
+            model: Comments,
+            attributes:[
+                'comment',
+                'user'
+            ]
+        } */]
         })
         article = articleData.get({plain:true})
-        console.log(article)
 
         res.render('article', {article})
     } catch(err){
