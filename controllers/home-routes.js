@@ -37,22 +37,52 @@ router.get('/article/:id', async (req,res) => {
                     'lastName',
                     'username'
                 ]
-            }/* ,
-        {
-            model: Comments,
-            attributes:[
-                'comment',
-                'user'
-            ]
-        } */]
+            },
+            {
+                model: Comments,
+                attributes: [
+                    'comment',
+                    'date_created'
+                ],
+                include:[{
+                    model: User,
+                    attributes: [
+                        'username'
+                    ]
+                }
+                ]
+            }]
         })
         article = articleData.get({plain:true})
+        console.log(article)
 
         res.render('article', {article})
     } catch(err){
         console.log(err)
     }
 
+})
+
+router.get('/dashboard', async (req, res) =>{
+    try{ 
+        const articles = await Article.findAll({
+            where:{
+                user_id: 1
+            },
+            raw: true
+        })
+
+        if (articles.length > 0){
+
+            articles.reverse()
+            res.render('dashboard', {articles})
+        } else {
+            const articles = {none:true}
+            res.render('dashboard', {articles})
+        }
+    }catch(err){
+        console.log(err)
+    }
 })
 
 module.exports = router
