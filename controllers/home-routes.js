@@ -4,8 +4,8 @@ const { Article, User, Comments } = require('../models');
 const router = require('express').Router();
 //import models
 
-//Routes
 
+//Routes
 router.get('/', async (req, res) => {
     try{
         const articlesData = await Article.findAll({
