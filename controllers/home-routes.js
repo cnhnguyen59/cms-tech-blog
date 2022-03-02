@@ -6,6 +6,13 @@ const router = require('express').Router();
 
 
 //Routes
+
+//GET Login
+router.get('/login', async(req, res)=>{
+    res.render('login')
+})
+
+//GET homepage
 router.get('/', async (req, res) => {
     try{
         const articlesData = await Article.findAll({
