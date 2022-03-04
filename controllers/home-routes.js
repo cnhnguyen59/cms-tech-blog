@@ -12,6 +12,11 @@ router.get('/login', async(req, res)=>{
     res.render('login')
 })
 
+//GET Create account page
+router.get('/create-account', async (req,res)=> {
+    res.render('createUser')
+})
+
 //GET homepage
 router.get('/', async (req, res) => {
     try{
@@ -92,4 +97,4 @@ router.get('/dashboard', async (req, res) =>{
     }
 })
 
-module.exports = router
+module.exports = router;

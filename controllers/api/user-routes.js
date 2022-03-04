@@ -2,9 +2,9 @@ const router = require('express').Router();
 
 const{ User, Article, Comments } = require('../../models')
 
-//GET /api/users/create
+//GET /api/user/create
 //desc: create new ueser
-router.post('/', async (req,res) =>{
+router.post('/new-user', async (req,res) =>{
     try{
         const newUserData = {
             firstName: req.body.firstName,
@@ -64,3 +64,5 @@ router.get('/login', async (req, res) => {
         console.log(err)
     }
 })
+
+module.exports = router;
