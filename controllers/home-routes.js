@@ -9,6 +9,11 @@ const router = require('express').Router();
 
 //GET Login
 router.get('/login', async(req, res)=>{
+    if (req.session.logged_in) {
+        res.redirect('/');
+        return;
+    }
+
     res.render('login')
 })
 
@@ -31,8 +36,8 @@ router.get('/', async (req, res) => {
         const articles = articlesData.map((article) =>
             article.get({ plain: true })
         ).reverse();
-        console.log(articles)
-        res.render('homepage', {articles})
+        console.log(`logged in: req.session.loggedIn`)
+        res.render('homepage', {articles, loggedIn:req.session.logged_in})
     } catch(err){
         console.log(err)
     }
@@ -68,18 +73,22 @@ router.get('/article/:id', async (req,res) => {
         article = articleData.get({plain:true})
         console.log(article)
 
-        res.render('article', {article})
+        res.render('article', {article, loggedIn:req.session.logged_in})
     } catch(err){
         console.log(err)
     }
 
 })
 
+// GET User dashboard
 router.get('/dashboard', async (req, res) =>{
+    if(!req.session.logged_in){
+        res.redirect('/login')
+    }
     try{ 
         const articles = await Article.findAll({
             where:{
-                user_id: 1
+                user_id: req.session.user_id
             },
             raw: true
         })
@@ -93,8 +102,13 @@ router.get('/dashboard', async (req, res) =>{
             res.render('dashboard', {articles})
         }
     }catch(err){
-        console.log(err)
+        res.status(400).json({message:'not logged in'})
     }
 })
 
+//GET
+
+router.get('/new-article', (req, res) => {
+    res.render('newArticle')
+})
 module.exports = router;

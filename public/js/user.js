@@ -4,18 +4,19 @@ const login = async (event) => {
     const email = $('#email').val()
     const password = $('#password').val()
 
-    if(email && password){
-        const response = await fetch ('/api/user/login', {
-            method: 'POST',
-            body: JSON.stringify({email, password}),
-            headers: {'Content Type': 'application/json'}
-        })
+    if (email && password) {
 
-        if(response.ok){
-            console.log('logged in')
-            document.location('/homepage')
-        } else{
-            alert(response.statusText)
+        console.log(`login info client: ${email}, ${password}`)
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (response.ok) {
+          document.location.replace('/');
+        } else {
+          alert('Failed to log in.');
         }
     }
 }
@@ -23,30 +24,23 @@ const login = async (event) => {
 const createAccount = async (event) => {
     event.preventDefault()
 
-    const firstName = $('#firstName')
-    const lastName = $('#lastName')
-    const email = $('#email')
-    const username = $('#username')
-    const password = $('#password')
+    const firstName = document.querySelector('#firstName').value.trim();
+    const lastName = document.querySelector('#lastName').value.trim();
+    const username = document.querySelector('#username').value.trim();
+    const email = document.querySelector('#email').value.trim();
+    const password = document.querySelector('#password').value.trim();
 
     if (firstName && lastName && email && username && password){
         const response = await fetch('/api/user/new-user', {
             method: 'POST',
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                username,
-                email,
-                password
-
-            }),
-            headers: {'Content-Type': 'appliction/json'}
-        })
-
-        if (response.ok){
-            console.log('new user created')
-            document.location.replace('/dashboard')
+            body: JSON.stringify({ firstName, lastName, username, email, password }),
+            headers: { 'Content-Type': 'application/json' },
+          });
+      
+          if (response.ok) {
+            document.location.replace('/');
+          } else {
+            alert('Failed to sign up.');
+          }
         }
-    }
-
 }

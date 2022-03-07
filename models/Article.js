@@ -15,10 +15,10 @@ Article.init(
             type: DataTypes.STRING,
             allowNull:false
         },
-        author:{
+        /* author:{
             type: DataTypes.STRING,
             allowNull:false
-        },
+        }, */
         description:{
             type: DataTypes.TEXT,
             allowNull:false
