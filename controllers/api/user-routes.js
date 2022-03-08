@@ -19,13 +19,14 @@ router.post('/new-user', async (req,res) =>{
             email: req.body.email
             }
         })  
-    
+    const user_id = userData.dataValues.id
+
     req.session.save(()=>{
-        req.session.user_id = userData.id;
+        req.session.user_id = user_id;
         req.session.logged_in = true;
     })
 
-    console.log(`user: ${req.session.user_id}`)
+    console.log(`user: ${req.session.user_id}, logged in: ${req.session.logged_in}`)
     
     res.status(200).json({message:"New User Created"})
 
@@ -38,8 +39,9 @@ router.post('/new-user', async (req,res) =>{
 //GET /api/users/login
 //desc: login
 router.post('/login', async (req, res) => {
-    if(req.session.loggedIn){
-        res.redirect('/')
+    if(req.session.logged_in){
+        res.render('/')
+        return
     }
     try{
         const userData = await User.findOne({
@@ -65,9 +67,6 @@ router.post('/login', async (req, res) => {
             req.session.user_id = userData.id
             req.session.logged_in = true
 
-            console.log('this is running')
-            console.log(`user: ${req.session.user_id}`)
-
             res.status(200).json({user: userData, message: 'You are now logged in!'})
         })
         
@@ -79,7 +78,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/logout', (req, res) => {
     // When the user logs out, destroy the session
-    if (req.session.loggedIn) {
+    if (req.session.logged_in) {
       req.session.destroy(() => {
         res.status(204).end();
       });

@@ -14,7 +14,7 @@ router.get('/login', async(req, res)=>{
         return;
     }
 
-    res.render('login')
+    res.render('login', {logged_in:!req.session.logged_in})
 })
 
 //GET Create account page
@@ -36,8 +36,11 @@ router.get('/', async (req, res) => {
         const articles = articlesData.map((article) =>
             article.get({ plain: true })
         ).reverse();
-        console.log(`logged in: req.session.loggedIn`)
-        res.render('homepage', {articles, loggedIn:req.session.logged_in})
+        console.log(`logged in: ${req.session.logged_in}`)
+        res.render('homepage', {
+            articles,
+            logged_in: !req.session.logged_in,
+        })
     } catch(err){
         console.log(err)
     }
@@ -73,7 +76,7 @@ router.get('/article/:id', async (req,res) => {
         article = articleData.get({plain:true})
         console.log(article)
 
-        res.render('article', {article, loggedIn:req.session.logged_in})
+        res.render('article', {article, logged_in:!req.session.logged_in})
     } catch(err){
         console.log(err)
     }
@@ -83,7 +86,8 @@ router.get('/article/:id', async (req,res) => {
 // GET User dashboard
 router.get('/dashboard', async (req, res) =>{
     if(!req.session.logged_in){
-        res.redirect('/login')
+        res.render('login')
+        return
     }
     try{ 
         const articles = await Article.findAll({
@@ -94,13 +98,12 @@ router.get('/dashboard', async (req, res) =>{
         })
 
         if (articles.length > 0){
-
             articles.reverse()
-            res.render('dashboard', {articles})
+            /* res.render('dashboard', {articles, logged_in: !req.session.logged_in}) */
         } else {
             const articles = {none:true}
-            res.render('dashboard', {articles})
         }
+        res.render('dashboard', {articles, logged_in: !req.session.logged_in})
     }catch(err){
         res.status(400).json({message:'not logged in'})
     }
@@ -109,6 +112,6 @@ router.get('/dashboard', async (req, res) =>{
 //GET
 
 router.get('/new-article', (req, res) => {
-    res.render('newArticle')
+    res.render('newArticle',{logged_in: req.session.logged_in})
 })
 module.exports = router;

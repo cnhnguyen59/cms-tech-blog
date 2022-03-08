@@ -11,7 +11,7 @@ router.post('/new', async (req, res) => {
             description: req.body.description,
             body: req.body.body,
             date_created: normalizedDate,
-            user_id: /* req.session.user_id */2
+            user_id: req.session.user_id
         })
         res.status(200).json({message:'Article created!'})
 
@@ -21,7 +21,7 @@ router.post('/new', async (req, res) => {
             }
         })
 
-        res.redirect(`/article/${articleData.id}`)
+        res.render(`/article/${articleData.id}`)
     } catch(err){
         res.status(400).json({message:'Error occurred posting article'})
     }
