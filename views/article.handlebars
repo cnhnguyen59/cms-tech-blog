@@ -1,6 +1,6 @@
 <div class="container d-flex flex-wrap m-3" style=" min-width:100vh;">
     <div class="head d-flex flex-column">
-        <h2 class="my-1">{{article.title}}</h2>
+        <h2 class="my-1" id="article" data-article-id={{article.id}}>{{article.title}}</h2>
         <p class ='my-0 py-1'>By {{article.user.firstName}} {{article.user.lastName}}</p>
         <p class="mb-3" style="font-size: .75rem;">{{article.date_created}}</p>
     </div>
@@ -15,13 +15,17 @@
 
     <div class="comments-section my-5" style=" min-width:100%;">
         <h4 style="font-size: 1.5rem;">Comments</h4>
+        {{#if logged_in}}
+        Log in in order to write comments
+        {{else}}
         <form class="d-flex flex-column">
             <div class="form-group">
                 {{!-- <label for="comment" class="comment form-label mt-4">Comment</label> --}}
                  <textarea class="form-control" id="comment" rows="3"></textarea>
              </div>
-         <button type="button" class="btn btn-primary my-1 align-self-end" style="background-color: #8ABD91;">Submit</button>    
+         <button type="button" class="btn btn-primary my-1 align-self-end" style="background-color: #8ABD91;" onclick="postComment(event)">Submit</button>    
         </form>
+        {{/if}}
         {{#each article.comments as |comment|}}
         <div class="card text-white bg-secondary my-3" style="width: 100%;">
             <div class="card-body">
