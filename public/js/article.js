@@ -6,16 +6,18 @@ const postArticle = async (event) => {
     const body = $('#body').val()
 
     if (title && description && body){
-        fetch('/api/article/new',{
+        const response =  await fetch('/api/article/new',{
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({title, description, body})
-        })
-        .then(response => response.json())
-        .then(data => (location.href = `/article/${data.id}`))
-        .catch(err => console.log(err))
+        });
+
+        if (response.ok){
+            window.location.assign("/dashboard")
+        }
+       
     }
 }
 

@@ -21,10 +21,10 @@ router.post('/new-user', async (req,res) =>{
         })  
     const user_id = userData.dataValues.id
 
-    req.session.save(()=>{
-        req.session.user_id = user_id;
-        req.session.logged_in = true;
-    })
+
+    req.session.user_id = user_id;
+    req.session.logged_in = true;
+    
 
     console.log(`user: ${req.session.user_id}, logged in: ${req.session.logged_in}`)
     
@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
             res.status(200).json({user: userData, message: 'You are now logged in!'})
         })
         
-        
+        res.rend
     } catch(err){
         console.log(err)
     }

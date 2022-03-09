@@ -86,7 +86,7 @@ router.get('/article/:id', async (req,res) => {
 // GET User dashboard
 router.get('/dashboard', async (req, res) =>{
     if(!req.session.logged_in){
-        res.render('login')
+        res.render('login', {logged_in: !req.session.logged_in})
         return
     }
     try{ 
@@ -112,6 +112,6 @@ router.get('/dashboard', async (req, res) =>{
 //GET
 
 router.get('/new-article', (req, res) => {
-    res.render('newArticle',{logged_in: req.session.logged_in})
+    res.render('newArticle',{logged_in: !req.session.logged_in})
 })
 module.exports = router;

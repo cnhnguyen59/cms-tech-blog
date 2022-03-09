@@ -6,7 +6,7 @@ const { User, Articles, Comments, Article} = require('../../models')
 router.post('/new', async (req, res) => {
     try{
         var normalizedDate = new Date(Date.now()).toISOString();
-        const newArticleData =await Article.create({
+        const newArticleData = await Article.create({
             title: req.body.title,
             description: req.body.description,
             body: req.body.body,
@@ -14,14 +14,6 @@ router.post('/new', async (req, res) => {
             user_id: req.session.user_id
         })
         res.status(200).json({message:'Article created!'})
-
-        const articleData = await Article.findOne({
-            where:{
-                title: req.body.title
-            }
-        })
-
-        res.render(`/article/${articleData.id}`)
     } catch(err){
         res.status(400).json({message:'Error occurred posting article'})
     }
